@@ -1,0 +1,57 @@
+PROYECTO/
+│
+├── 📁 FRONTEND/
+│   └── 📁 cliente/
+│       ├── 📁 assets/
+│       │   └── 📁 img/
+│       ├── 📁 css/
+│       │   ├── carrito.css
+│       │   ├── modo.css
+│       │   ├── productos.css
+│       │   └── style.css
+│       ├── 📁 js/
+│       │   ├── api.js
+│       │   ├── main.js
+│       │   ├── theme.js
+│       │   │
+│       │   ├── 📁 controllers/
+│       │   ├── 📁 models/
+│       │   └── 📁 views/
+│       └── 📁 pages/
+│           ├── bienvenida.html
+│           ├── carrito.html
+│           ├── productos.html
+│           └── ticket.html
+│
+│
+├── 📁 BACKOFFICE/   ✅ aquí va tu servidor Node/Express
+│   ├── 📁 src/
+│   │   ├── 📁 routes/
+│   │   │   ├── auth.routes.js
+│   │   │   ├── productos.routes.js
+│   │   │   └── admin.routes.js
+│   │   │
+│   │   ├── 📁 controllers/
+│   │   │   ├── auth.controller.js
+│   │   │   └── productos.controller.js
+│   │   │
+│   │   ├── 📁 models/
+│   │   │   └── Producto.js
+│   │   │
+│   │   ├── 📁 middleware/
+│   │   │   └── auth.middleware.js
+│   │   │
+│   │   ├── 📁 views/ (EJS)
+│   │   │   ├── altaProducto.ejs
+│   │   │   ├── dashboard.ejs
+│   │   │   ├── editarProducto.ejs
+│   │   │   └── login.ejs
+│   │   │
+│   │   └── 📁 config/
+│   │       └── db.js
+│   │
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+│
+└── .gitignore
