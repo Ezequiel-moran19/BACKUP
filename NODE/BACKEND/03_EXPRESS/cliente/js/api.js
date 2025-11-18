@@ -22,6 +22,14 @@ export const actualizarEstadoProducto = async (id, estado) => {
   });
 };
 
+export async function guardarTicketBD(ventas){
+  await fetch("/api/ventas", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(ventas)
+  });
+}
+
 
 // export const productos = [ 
 //   { id: 1, nombre: "guitarra1",descripcion: "Descripcion del productos", precio: 120, rutaImg: "../assets/img/guitarra1.jpg", categoria: "Guitarra", activo: true,stock:4 },

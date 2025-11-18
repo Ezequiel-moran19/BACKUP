@@ -3,6 +3,8 @@ import { Producto } from "../model/producto.model.js";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import { Venta } from "../model/ventas.model.js"
+import { VentaItem } from "../model/ventasItems.model.js";
 
 const router = Router();
 const upload = multer({ dest: "servidor/src/uploads" });
@@ -31,13 +33,20 @@ function guardarImagen(file) {
 
 // LISTAR
 router.get("/productos", async (req, res) => {
-  const productos = await Producto.findAll();
+  const productos = await Producto.findAll({
+    order: [
+      ["estado", "DESC"],
+      ["stock", "DESC"]   
+    ]
+  });
+
   res.json({
     message: "Lista de productos",
     status: 200,
     body: productos
   });
 });
+
 
 // OBTENER UNO
 router.get("/productos/:id", async (req, res) => {
@@ -93,6 +102,7 @@ router.delete("/productos/:id", async (req, res) => {
   await Producto.update({ estado: false }, { where: { id } });
   res.json({ ok: true, msg: "Producto desactivado" });
 });
+
 // PATCH - Cambiar estado (activar/desactivar)
 router.patch("/productos/:id", async (req, res) => {
   const { id } = req.params;
@@ -112,5 +122,31 @@ router.patch("/productos/:id", async (req, res) => {
     return res.status(500).json({ ok: false, msg: "Error al actualizar estado" });
   }
 });
+
+router.post("/ventas", async (req, res) => {
+  try {
+    const { fecha, nombreCliente, total, productos } = req.body
+    
+    const venta = await Venta.create({  fecha, nombreCliente, total })
+
+    for (const p of productos) {
+      await VentaItem.create({
+          VentaId: venta.id,
+          ProductoId: p.id,
+          cantidad: p.cantidad,
+          precio: p.precio,
+          subtotal: p.subtotal
+      });
+
+      await Producto.increment(
+        { stock: -p.cantidad },
+        { where: { id: p.id} }
+      );
+    }
+    res.json(venta);
+  } catch (err) {
+    res.status(500).json({ error: "Error al guardar ticket" });
+  }
+})
 
 export default router;

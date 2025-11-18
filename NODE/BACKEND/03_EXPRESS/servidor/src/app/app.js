@@ -1,4 +1,3 @@
-//APP.JS
 import express from "express";
 import productosRouter from "../router/producto.router.js";
 import adminRouter from "../router/admin.router.js";

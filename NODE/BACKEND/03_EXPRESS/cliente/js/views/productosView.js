@@ -7,37 +7,36 @@ export class ProductosView {
     }
 
     static renderizaProducto(producto) {
-
-
-            const card = this.crearElemento('div', 'card');
-            card.style.width = "18rem";
-            card.innerHTML = `
-            <img src="http://localhost:3000${producto.rutaImg}" class="card-img-top" alt="${producto.nombre}">
-            <div class="card-body">
-            <h5 class="card-title">Nombre: ${producto.nombre}</h5>
-            <p class="card-text">Descripcion ${producto.descripcion}</p>
-                <p class="card-text">Precio: $${producto.precio}</p>
-                <p class="card-text">Stock: ${producto.stock}</p>
-                <p class="card-text">Categoria: ${producto.categoria}</p>
-                <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-danger boton-card align-items-center btnAgregar">Agregar al carrito</a>
-                </div>
-                </div>
-                `;
-                return card;
-         
+        const card = this.crearElemento('div', 'card');
+        card.style.width = "18rem";
+        card.innerHTML = `
+        <img src="http://localhost:3000${producto.rutaImg}" class="card-img-top" alt="${producto.nombre}">
+        <div class="card-body">
+        <h5 class="card-title">Nombre: ${producto.nombre}</h5>
+        <p class="card-text">Descripcion ${producto.descripcion}</p>
+            <p class="card-text">Precio: $${producto.precio}</p>
+            <p class="card-text">Stock: ${producto.stock}</p>
+            <p class="card-text">Categoria: ${producto.categoria}</p>
+            <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-danger boton-card align-items-center btnAgregar">Agregar al carrito</a>
+            </div>
+            </div>
+            `;
+        return card;
     }
 
     static mostrarProducto(contenedor, listaProductos, carrito) {
         contenedor.innerHTML = "";
         listaProductos.forEach((producto) => {
-            const card = this.renderizaProducto(producto);
-            const itemEnCarrito = carrito.items.find(p => p.id === producto.id);
+            if (producto.estado) {
+                const card = this.renderizaProducto(producto);
+                const itemEnCarrito = carrito.items.find(p => p.id === producto.id);
 
-            if (itemEnCarrito) {
-                this.configurarCardConCarrito(card, producto, carrito);
+                if (itemEnCarrito) {
+                    this.configurarCardConCarrito(card, producto, carrito);
+                }
+                contenedor.appendChild(card);
             }
-            contenedor.appendChild(card);
         });
     }
 
@@ -71,14 +70,14 @@ export class ProductosView {
         const contador = card.querySelector("span");
         const itemIndex = carrito.items.findIndex(p => p.id === producto.id);
         const item = carrito.items[itemIndex];
-        
+
         if (!item) return;
 
         if (operacion === 'incrementar') {
             if (item.cantidad < producto.stock) {
                 item.cantidad += 1;
             } else {
-                alert(`⚠️ No hay más stock disponible (${producto.stock})`);
+                alert(`No hay más stock disponible (${producto.stock})`);
                 return;
             }
         } else {
@@ -127,23 +126,32 @@ export class ProductosView {
 
         nuevoContenedor.addEventListener("click", (e) => {
             e.preventDefault();
-            
+
             if (e.target.classList.contains("btn-mas")) {
                 this.manejarBotonMas(card, producto, carrito);
             } else if (e.target.classList.contains("btn-menos")) {
                 this.manejarBotonMenos(card, producto, carrito);
             }
+            ProductosView.actualizarContadorCarrito(carrito);
         });
     }
+
     static crearContenedorBotones() {
         const btnSumar = this.crearBoton('sumar')
         const contador = this.renderContador();
         const btnRestar = this.crearBoton('restar');
 
-        const contenedorBotones = this.crearElemento('div', 
+        const contenedorBotones = this.crearElemento('div',
             'd-flex justify-content-between align-items-center mt-2');
         contenedorBotones.append(btnRestar, contador, btnSumar);
 
         return contenedorBotones;
+    }
+
+    static actualizarContadorCarrito(carrito) {
+        const contador = document.getElementById("contador-carrito");
+        if (!contador) return;
+
+        contador.textContent = carrito.totalUnidades();
     }
 }

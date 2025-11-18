@@ -19,13 +19,15 @@ export class ProductosController {
 
         this.carrito = Carrito.crearDesdeLocalStorage(nombreUsuario);
         this.contenedor = document.getElementById("productos");
-        //Traigo los productos desde la API
+
         this.productos = await obtenerProductos();
 
         this.mostrarPagina();
         this.configurarFiltros();
         this.configurarPaginacion();
         this.configurarEventosAgregar();
+
+        ProductosView.actualizarContadorCarrito(this.carrito);
     }
 
     static configurarFiltros() {
@@ -62,6 +64,9 @@ export class ProductosController {
             card.querySelector(".card-body").appendChild(contenedorBotones);
 
             ProductosView.agregarEventosCard(card, producto, this.carrito);
+
+            ProductosView.actualizarContadorCarrito(this.carrito);
+
         } else {
             alert(`No hay más stock disponible (${producto.stock})`);
             btnAgregar.style.display = "block";
@@ -93,7 +98,7 @@ export class ProductosController {
         const inicio = (this.paginaActual - 1) * this.productosPorPagina;
         const fin = inicio + this.productosPorPagina;
         const lista = this.obtenerListaActual().slice(inicio, fin);
-        
+
         ProductosView.mostrarProducto(this.contenedor, lista, this.carrito);
         this.actualizarIndicadorPaginas();
     }
@@ -110,6 +115,7 @@ export class ProductosController {
             this.mostrarPagina();
         }
     }
+
     static paginaSiguiente() {
         if (this.paginaActual < this.obtenerTotalPaginas()) {
             this.paginaActual++;
@@ -131,7 +137,7 @@ export class ProductosController {
         const totalPaginas = this.obtenerTotalPaginas();
         const actual = document.getElementById("pagina-actual");
         const total = document.getElementById("total-paginas");
-        
+
         if (actual && total) {
             actual.textContent = this.paginaActual;
             total.textContent = totalPaginas;

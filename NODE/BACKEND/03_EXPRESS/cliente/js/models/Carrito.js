@@ -46,5 +46,8 @@ export class Carrito {
   calcularTotal() {
       return this.items.reduce((acc, item) => acc + Number(item.subtotal), 0);
   }
-
+  
+  totalUnidades() {
+    return this.items.reduce((acc, item) => acc + item.cantidad, 0);
+  }
 }

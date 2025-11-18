@@ -6,6 +6,7 @@ import { Persona } from "./models/Personas.js";
 import { ticketController } from "./controllers/TicketController.js";
 
 class ConfiguradorNavegacion {
+    
     static configurarBotonInicio() {
         document.querySelectorAll('a[href="./bienvenida.html"]').forEach(link => {
             link.addEventListener("click", (e) => {

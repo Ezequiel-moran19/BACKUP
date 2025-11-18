@@ -11,7 +11,6 @@
 
 </head>
 <body>
-    <main class="container mt-2">
   <main class="container mt-2">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,21 +39,32 @@
         </nav>
       </header>
 
-    <section id="principal">
-        <h2 id="saludo" class="m-0 border-top bg-light text-center p-5">
-        CRUD
-        </h2>
-        <a href="/admin/alta-producto" class="btn btn-danger mt-3">
-          Alta producto
-        </a>
+      <section id="principal">
+          <h2 id="saludo" class="m-0 border-top bg-light text-center p-5"> Dashboar </h2>
+          
+          <div id="filtros" class="d-flex justify-content-between align-items-center p-2">
+            <div class="d-flex gap-2">
+              <button type="button" id="filtro-guitarra" class="btn btn-outline-danger"> Guitarras </button>
+              <button type="button" id="filtro-pianos" class="btn btn-outline-danger"> Pianos </button>
+            </div>
 
-        <div id="productos">
-        <h4 class="text-center text-muted mt-5">⚠ Falta conectar productos desde backend</h4>
-        </div>
-    </section>
+            <!-- Botón Alta -->
+            <a href="/admin/alta-producto" class="btn btn-danger"> Alta producto</a>
+          </div>
+
+          <div id="productos" class="row g-4 mt-2">
+            <h4 class="text-center text-muted mt-5">⚠ Falta conectar productos desde backend</h4>
+          </div>
+          <div class="d-flex justify-content-center mt-3 gap-3">
+            <button id="pagina-anterior" class="btn btn-dark">Anterior</button>
+            <span>Página <span id="pagina-actual">1</span> de <span id="total-paginas">1</span></span>
+            <button id="pagina-siguiente" class="btn btn-dark">Siguiente</button>
+          </div>
+
+      </section>
 
     </main>
     <script type="module" src="/admin/public/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+</body>
 </html>
