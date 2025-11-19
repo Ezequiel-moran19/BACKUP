@@ -47,7 +47,6 @@ router.get("/productos", async (req, res) => {
   });
 });
 
-
 // OBTENER UNO
 router.get("/productos/:id", async (req, res) => {
   const producto = await Producto.findByPk(req.params.id);
