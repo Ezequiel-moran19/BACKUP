@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { Venta } from "../model/ventas.model.js"
 import { VentaItem } from "../model/ventasItems.model.js";
+import { verificarAdmin } from "../utils/middelwareJWT.js";
 
 const router = Router();
 const upload = multer({ dest: "servidor/src/uploads" });
@@ -32,7 +33,7 @@ function guardarImagen(file) {
 }
 
 // LISTAR
-router.get("/productos", async (req, res) => {
+router.get("/productos", verificarAdmin, async (req, res) => {
   const productos = await Producto.findAll({
     order: [
       ["estado", "DESC"],
@@ -48,13 +49,13 @@ router.get("/productos", async (req, res) => {
 });
 
 // OBTENER UNO
-router.get("/productos/:id", async (req, res) => {
+router.get("/productos/:id", verificarAdmin, async (req, res) => {
   const producto = await Producto.findByPk(req.params.id);
   res.json(producto);
 });
 
 // CREAR Utilice el mid de Multer que me trae el dato del archico 
-router.post("/productos", upload.single("imgProductos"), async (req, res) => {
+router.post("/productos", verificarAdmin, upload.single("imgProductos"), async (req, res) => {
   try {
     const rutaImg = guardarImagen(req.file);
     const data = obtenerDatosProducto(req, rutaImg);
@@ -69,7 +70,7 @@ router.post("/productos", upload.single("imgProductos"), async (req, res) => {
 });
 
 // ACTUALIZAR
-router.post("/productos/:id", upload.single("imgProductos"), async (req, res) => {
+router.post("/productos/:id", verificarAdmin, upload.single("imgProductos"), async (req, res) => {
   try {
     const producto = await Producto.findByPk(req.params.id);
     if (!producto) return res.status(404).send("Producto no encontrado");
@@ -96,14 +97,14 @@ router.post("/productos/:id", upload.single("imgProductos"), async (req, res) =>
 });
 
 // Baja lógica 
-router.delete("/productos/:id", async (req, res) => {
+router.delete("/productos/:id", verificarAdmin, async (req, res) => {
   const { id } = req.params;
   await Producto.update({ estado: false }, { where: { id } });
   res.json({ ok: true, msg: "Producto desactivado" });
 });
 
 // PATCH - Cambiar estado (activar/desactivar)
-router.patch("/productos/:id", async (req, res) => {
+router.patch("/productos/:id", verificarAdmin, async (req, res) => {
   const { id } = req.params;
   const { estado } = req.body;
 
