@@ -6,6 +6,7 @@ import path from "path";
 import { Venta } from "../model/ventas.model.js"
 import { VentaItem } from "../model/ventasItems.model.js";
 import { verificarAdmin } from "../utils/middelwareJWT.js";
+import { Op } from "sequelize";
 
 const router = Router();
 const upload = multer({ dest: "servidor/src/uploads" });
@@ -33,7 +34,7 @@ function guardarImagen(file) {
 }
 
 // LISTAR
-router.get("/productos", verificarAdmin, async (req, res) => {
+router.get("/productos", async (req, res) => {
   const productos = await Producto.findAll({
     order: [
       ["estado", "DESC"],
@@ -43,6 +44,24 @@ router.get("/productos", verificarAdmin, async (req, res) => {
 
   res.json({
     message: "Lista de productos",
+    status: 200,
+    body: productos
+  });
+});
+
+router.get("/productos/buscar", async (req, res) => {
+  const { q } = req.query;
+
+  const productos = await Producto.findAll({
+    where: {
+      nombre: {
+        [Op.like]: `%${q}%`
+      }
+    }
+  });
+
+  res.json({
+    message: "Resultados",
     status: 200,
     body: productos
   });

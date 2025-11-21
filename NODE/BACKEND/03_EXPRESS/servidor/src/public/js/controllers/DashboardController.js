@@ -20,6 +20,7 @@ export class TablaProductosController {
     }
 
     this.renderizar();
+    this.asignarBuscador();
     this.asignarFiltros();
     this.asignarPaginacion();
   }
@@ -107,5 +108,27 @@ export class TablaProductosController {
         this.mostrarPagina(nueva);
       };
     }
+  }
+
+  static async asignarBuscador(){
+    const input = document.getElementById("barra-busqueda");
+
+    input.addEventListener("input", async (e) => {
+      const texto = e.target.value.trim();
+      
+      if (texto === "") {
+        this.productos = await obtenerProductos();
+        this.paginaActual = 1;
+        this.renderizar()
+        return;
+      }
+
+      const res = await fetch(`/api/productos/buscar?q=${texto}`);
+      const data = await res.json()
+
+      this.productos = data.body;
+      this.paginaActual = 1;
+      this.renderizar();
+    });
   }
 }

@@ -5,18 +5,18 @@ export class Persona {
     }
 
     static guardarNombre(nombre) {
-        localStorage.setItem("nombreUsuario", nombre);
-        localStorage.setItem("sesionActiva", "true");
+        sessionStorage.setItem("nombreUsuario", nombre);
+        sessionStorage.setItem("sesionActiva", "true");
     }
 
     static obtenerNombre() {
-        if (localStorage.getItem("sesionActiva") !== "true") return null;
-        return localStorage.getItem("nombreUsuario");
+        if (sessionStorage.getItem("sesionActiva") !== "true") return null;
+        return sessionStorage.getItem("nombreUsuario");
     }
 
     static borrarNombre() {
-        localStorage.removeItem("nombreUsuario");
-        localStorage.removeItem("sesionActiva");
+        sessionStorage.removeItem("nombreUsuario");
+        sessionStorage.removeItem("sesionActiva");
     }
 
     static validar(nombre) {

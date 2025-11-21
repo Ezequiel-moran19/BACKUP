@@ -38,6 +38,8 @@ export class ProductosController {
 
         configurarFiltro("filtro-guitarra", "Guitarra");
         configurarFiltro("filtro-pianos", "Piano");
+        configurarFiltro("filtro-todos", "Todos");
+
     }
 
     static configurarPaginacion() {
@@ -48,6 +50,7 @@ export class ProductosController {
 
         configurarBoton("siguiente", "paginaSiguiente");
         configurarBoton("anterior", "paginaAnterior");
+        
     }
 
     static manejarAgregarProducto(card, producto) {
@@ -128,7 +131,12 @@ export class ProductosController {
     }
 
     static filtrarPorCategoria(categoria) {
-        this.categoriaFiltrada = this.productos.filter(p => p.categoria === categoria);
+        if(categoria =="Todos"){
+            this.categoriaFiltrada=this.productos;
+        }else{
+
+            this.categoriaFiltrada = this.productos.filter(p => p.categoria === categoria);
+        }
         this.paginaActual = 1;
         this.mostrarPagina();
     }

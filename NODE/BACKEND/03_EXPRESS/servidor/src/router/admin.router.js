@@ -44,13 +44,13 @@ adminRouter.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: admin.id, nombre: admin.nombre }, // datos visibles en el token
         process.env.JWT_SECRET, // ESTA ES LA CLAVE QUE FIRMA EL TOKEN
-      { expiresIn: "20m" } // el token expira en 1 horas
+      { expiresIn: "10m" } // el token expira en 1 horas
     )
     // 4) Guardar la cookie httpOnly → No es accesible desde JS del navegador
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "strict",
-      maxAge: 20 * 60 * 1000 // 1 hora
+      maxAge: 10 * 60 * 1000 // 1 hora
     });
 
     await Log.create({ adminNombre: admin.nombre, adminId: admin.id });

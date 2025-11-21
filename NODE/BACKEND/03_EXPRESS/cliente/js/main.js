@@ -63,7 +63,7 @@ function verificarSesion() {
 function init() {
     console.log("Iniciando aplicación...");
     console.log("Página actual:", window.location.pathname);
-    console.log("Usuario:", localStorage.getItem("nombreUsuario"));
+    console.log("Usuario:", sessionStorage.getItem("nombreUsuario"));
 
     if (!verificarSesion()) return;
     

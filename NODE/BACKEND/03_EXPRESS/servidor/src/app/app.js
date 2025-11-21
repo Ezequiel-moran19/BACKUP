@@ -17,11 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "servidor/src/views"));
 
-
 app.use(cookieParser());
-//Motor de vistas
-app.set("view engine", "ejs");
-app.set("views", path.join(process.cwd(), "servidor/src/views"));
 
 // Servir frontend archivos estaticos
 app.use(express.static(path.join(process.cwd(), "cliente")));

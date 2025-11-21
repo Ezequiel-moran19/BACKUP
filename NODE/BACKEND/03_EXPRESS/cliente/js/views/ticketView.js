@@ -63,16 +63,9 @@ export class ticketView{
             const botonesDiv = document.createElement("div");
             botonesDiv.classList.add("d-flex", "gap-3");
 
-            const btnDescargar = document.createElement("button");
-            btnDescargar.classList.add("btn", "btn-danger", "flex-fill", "d-flex", "align-items-center", "justify-content-center");
-            btnDescargar.id = "btnConfirmar";
-            btnDescargar.innerHTML = `<i class="bi bi-download me-2"></i> Descargar PDF`;
+            const btnDescargar = this.crearBotonDescargaPdf();
 
-            const btnSalir = document.createElement("a");
-            btnSalir.id = "btnSalir";
-            btnSalir.href = "./productos.html";
-            btnSalir.classList.add("btn", "bg-light", "border", "flex-fill", "d-flex", "align-items-center", "justify-content-center");
-            btnSalir.innerHTML = `<i class="bi bi-house me-2"></i> Salir`;
+            const btnSalir = this.crearBotonSalir();
 
             botonesDiv.appendChild(btnDescargar);
             botonesDiv.appendChild(btnSalir);
@@ -95,6 +88,23 @@ export class ticketView{
             container.appendChild(footer);
 
         return container;
+    }
+
+    static crearBotonSalir(){
+        const btnSalir = document.createElement("a");
+            btnSalir.id = "btnSalir";
+            btnSalir.href = "./productos.html";
+            btnSalir.classList.add("btn", "bg-light", "border", "flex-fill", "d-flex", "align-items-center", "justify-content-center");
+            btnSalir.innerHTML = `<i class="bi bi-house me-2"></i> Salir`;
+        return btnSalir;
+    }
+
+    static crearBotonDescargaPdf(){
+        const btnDescargar = document.createElement("button");
+            btnDescargar.classList.add("btn", "btn-danger", "flex-fill", "d-flex", "align-items-center", "justify-content-center");
+            btnDescargar.id = "btnConfirmar";
+            btnDescargar.innerHTML = `<i class="bi bi-download me-2"></i> Descargar PDF`;
+        return btnDescargar;
     }
 
     static crearProducto(producto) {

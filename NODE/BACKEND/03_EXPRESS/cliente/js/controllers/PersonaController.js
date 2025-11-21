@@ -43,9 +43,9 @@ export class PersonaController {
         Persona.borrarNombre();
 
         if (nombreUsuario) {
-            localStorage.removeItem(`Carrito_${nombreUsuario}`);
+            sessionStorage.removeItem(`Carrito_${nombreUsuario}`);
         }
-        localStorage.removeItem("carrito");
+        sessionStorage.removeItem("carrito");
         window.location.href = "/pages/bienvenida.html";
     }
 
