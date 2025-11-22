@@ -1,4 +1,4 @@
-export class Persona {
+export class Persona { 
     constructor(idPersona, nombre) {
         this.idPersona = idPersona;
         this.nombre = nombre;

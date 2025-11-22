@@ -1,6 +1,6 @@
 
 export class ticketView{
-        static motrarticket(ticket){
+        static mostrarticket(ticket){
             console.log(ticket)
             const contenedor = document.getElementById("principalTicket");
             const card = ticketView.renderizaTicket(ticket);

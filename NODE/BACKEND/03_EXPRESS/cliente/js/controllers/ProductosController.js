@@ -1,8 +1,8 @@
 import { ProductosView } from "../views/productosView.js";
 import { Persona } from "../models/Personas.js";
 import { Carrito } from "../models/Carrito.js";
-import { obtenerProductos } from "../api.js";
-import { Paginacion } from "../paginacion.js";
+import { obtenerProductos } from "../api/productosApi.js";
+import { Paginacion } from "../utils/paginacion.js";
 
 export class ProductosController {
 

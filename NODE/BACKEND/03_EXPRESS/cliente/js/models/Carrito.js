@@ -7,12 +7,12 @@ export class Carrito {
 
   static crearDesdeLocalStorage(nombreUsuario) {
     const clave = `Carrito_${nombreUsuario}`;
-    const items = JSON.parse(localStorage.getItem(clave)) || [];
+    const items = JSON.parse(sessionStorage.getItem(clave)) || [];
     return new Carrito(nombreUsuario, clave, items);
   }
 
   guardar() {
-    localStorage.setItem(this.clave, JSON.stringify(this.items));
+    sessionStorage.setItem(this.clave, JSON.stringify(this.items));
   }
 
   agregar(producto) {
