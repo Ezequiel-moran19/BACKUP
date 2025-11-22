@@ -7,13 +7,11 @@ export class PersonaController {
         const nombreGuardado = Persona.obtenerNombre();
         const esPaginaBienvenida = window.location.pathname.includes("bienvenida.html");
 
-        // Redirigir si ya hay sesión
         if (nombreGuardado && esPaginaBienvenida) {
             window.location.href = "/pages/productos.html";
             return;
         }
 
-        // Redirigir al login si no hay sesión
         if (!nombreGuardado && !esPaginaBienvenida) {
             window.location.href = "/pages/bienvenida.html";
             return;
@@ -28,12 +26,13 @@ export class PersonaController {
                     view.mostrarAlerta("Por favor, ingrese su nombre");
                     return;
                 }
-                Persona.guardarNombre(nombre); // activa sesión
+
+                Persona.guardarNombre(nombre);
                 view.mostrarSaludo(nombre);
                 view.ocultarFormulario();
                 setTimeout(() => {
                     window.location.href = "/pages/productos.html";
-                }, 500); // redirigir rápido
+                }, 500);
             });
         }
     }
@@ -42,18 +41,15 @@ export class PersonaController {
         const nombreUsuario = Persona.obtenerNombre();
         Persona.borrarNombre();
 
-        if (nombreUsuario) {
-            sessionStorage.removeItem(`Carrito_${nombreUsuario}`);
-        }
+        if (nombreUsuario) sessionStorage.removeItem(`Carrito_${nombreUsuario}`);
         sessionStorage.removeItem("carrito");
+
         window.location.href = "/pages/bienvenida.html";
     }
 
     static verificarSesion() {
-        const nombreUsuario = Persona.obtenerNombre();
-        if (!nombreUsuario) {
-            console.log("Sesión no válida, redirigiendo a bienvenida...");
-            window.location.href = "/pages/bienvenida.html"; // ruta relativa al static root
+        if (!Persona.obtenerNombre()) {
+            window.location.href = "/pages/bienvenida.html";
             return false;
         }
         return true;
