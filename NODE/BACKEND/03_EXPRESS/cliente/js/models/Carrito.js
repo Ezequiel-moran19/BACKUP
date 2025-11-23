@@ -16,21 +16,21 @@ export class Carrito {
   }
 
   agregar(producto) {
-    const existente = this.items.find(p => p.id === producto.id);
-    if (existente) {
-      const nuevaCantidad = existente.cantidad + (producto.cantidad || 1);
-      if (nuevaCantidad > existente.stock) return false;
-      existente.cantidad = nuevaCantidad;
-      existente.subtotal = existente.cantidad * existente.precio;
-    } else {
-      this.items.push({
-        ...producto,
-        cantidad: producto.cantidad || 1,
-        subtotal: producto.precio
-      });
-    }
-    this.guardar();
-    return true;
+      const existente = this.items.find(p => p.id === producto.id);
+
+      if (existente) {
+          existente.cantidad += producto.cantidad || 1;
+          existente.subtotal = existente.cantidad * existente.precio;
+      } else {
+          this.items.push({
+              ...producto,
+              cantidad: producto.cantidad || 1,
+              subtotal: (producto.cantidad || 1) * producto.precio
+          });
+      }
+
+      this.guardar();
+      return true;
   }
 
   eliminar(index) {

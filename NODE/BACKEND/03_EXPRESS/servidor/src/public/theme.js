@@ -1,4 +1,4 @@
-function inicializarModoOscuro() {
+export function inicializarModoOscuro() {
   const btnDark = document.getElementById("modo-oscuro");
   if (!btnDark) return;
 

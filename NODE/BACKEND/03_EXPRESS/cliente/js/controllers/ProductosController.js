@@ -22,7 +22,9 @@ export class ProductosController {
         this.carrito = Carrito.crearDesdeLocalStorage(usuario);
         this.contenedor = document.getElementById("productos");
 
-        this.productos = await obtenerProductos();
+        const productos = await obtenerProductos();
+        const disponibles = productos.filter(p => p.stock > 0);
+        this.productos = disponibles;
 
         this.paginacion = new Paginacion(this.productos, 6);
 
@@ -106,16 +108,7 @@ export class ProductosController {
     }
 
     static procesarAgregar(card, producto) {
-        const btn = card.querySelector(".btnAgregar");
-        btn.style.display = "none";
-
-        const agregado = this.carrito.agregar(producto);
-
-        if (!agregado) {
-            alert(`No hay más stock (${producto.stock})`);
-            btn.style.display = "block";
-            return;
-        }
+        this.carrito.agregar(producto);
 
         const viejo = card.querySelector("div.mt-2");
         if (viejo) viejo.remove();
@@ -127,3 +120,9 @@ export class ProductosController {
         ProductosView.actualizarContadorCarrito(this.carrito);
     }
 }
+
+        // if (!agregado) {
+        //     alert(`No hay más stock (${producto.stock})`);
+        //     btn.style.display = "block";
+        //     return;
+        // }

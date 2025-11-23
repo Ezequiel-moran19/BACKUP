@@ -21,7 +21,6 @@ app.use(cookieParser());
 
 // Servir frontend archivos estaticos
 app.use(express.static(path.join(process.cwd(), "cliente")));
-app.use("/js", express.static(path.join(process.cwd(), "cliente/js")));
 app.use("/uploads", express.static(path.join(process.cwd(), "servidor/src/uploads")));
 app.use("/admin/public", express.static(path.join(process.cwd(), "servidor/src/public")));
 

@@ -1,53 +1,15 @@
 export class ResumenCarritoView {
+
     constructor(contenedor, carrito, confirmarCallback) {
-        this.contenedor = contenedor;
+        this.contenedor = contenedor; // div#resumen
         this.carrito = carrito;
         this.confirmarCallback = confirmarCallback;
-        this.elemento = null;
+        this.elemento = this.contenedor; // Con esta referencia apunto al mismo div en HTML
     }
-
-    // FORMATEO DE DINERO
-    formatear(valor) {
-        return `$${valor.toFixed(2)}`;
-    }
-
     // RENDER PRINCIPAL
     render() {
-        this.crearEstructura();
         this.asignarEventos();
         this.actualizar();
-    }
-
-    // CREAR ESTRUCTURA HTML
-    crearEstructura() {
-        this.elemento = document.createElement("div");
-        this.elemento.className = "p-3 bg-light rounded shadow-sm";
-        this.elemento.innerHTML = `
-            <h4 class="fw-bold mb-3">Resumen</h4>
-
-            <div class="d-flex justify-content-between mb-2">
-                <span>Subtotal</span>
-                <span class="resumen-subtotal"></span>
-            </div>
-
-            <div class="d-flex justify-content-between fw-bold fs-5 text-danger">
-                <span>Total</span>
-                <span class="resumen-total"></span>
-            </div>
-
-            <div class="mt-3">
-                <button class="btn btn-danger w-100 mb-2" id="finalizarCompra">
-                    Finalizar Compra
-                </button>
-
-                <a href="./productos.html" class="btn btn-outline-secondary w-100">
-                    Seguir comprando
-                </a>
-            </div>
-        `;
-
-        this.contenedor.innerHTML = "";
-        this.contenedor.appendChild(this.elemento);
     }
 
     // ASIGNAR EVENTOS
@@ -56,6 +18,8 @@ export class ResumenCarritoView {
         if (!btnFinalizar) return;
 
         btnFinalizar.addEventListener("click", () => {
+            if (this.carrito.items.length === 0) return;
+
             if (this.confirmarCallback) this.confirmarCallback();
             window.location.href = "./ticket.html";
         });
@@ -66,7 +30,7 @@ export class ResumenCarritoView {
         if (!this.elemento) return;
 
         const total = this.carrito.calcularTotal();
-        const formato = this.formatear(total);
+        const formato = `$${total.toFixed(2)}`;
 
         this.elemento.querySelector(".resumen-subtotal").textContent = formato;
         this.elemento.querySelector(".resumen-total").textContent = formato;

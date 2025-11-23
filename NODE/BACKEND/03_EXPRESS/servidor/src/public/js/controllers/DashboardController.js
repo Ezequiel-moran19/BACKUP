@@ -1,5 +1,5 @@
 import { TablaProductosView } from "../views/dashboardView.js";
-import { obtenerProductos, actualizarEstadoProducto } from "/js/api.js";
+import { obtenerProductos, actualizarEstadoProducto } from "/js/api/productosApi.js";
 
 export class TablaProductosController {
   static paginaActual = 1;
