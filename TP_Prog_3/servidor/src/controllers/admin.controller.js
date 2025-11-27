@@ -2,7 +2,6 @@ import { Producto } from "../model/producto.model.js";
 import { Admin } from "../model/admin.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { registrarLog } from "../utils/logger.js";
 
 export class adminController{
 
@@ -11,18 +10,15 @@ export class adminController{
     }
 
     static async dashboard(req,res){
-        await registrarLog(req.admin, "ACCESO_DASHBOARD", "Accedió al dashboard");
         res.render("dashboard");
     }
 
     static async altaProducto(req,res){
-        await registrarLog(req.admin, "ACCESO_ALTA_PRODUCTO", "Accedió a la página de alta de productos");
         res.render("altaProducto");
     }
 
     static async editarProducto(req,res){
         const producto = await Producto.findByPk(req.params.id);
-        await registrarLog(req.admin, "ACCESO_EDITAR_PRODUCTO", `Accedió a la edición del producto ID: ${req.params.id}`);
         res.render("editarProducto", { producto });
     }
     static async ingresar(req, res){
@@ -53,7 +49,6 @@ export class adminController{
             maxAge: 10 * 60 * 1000 // 10 min
             });
 
-            await registrarLog(admin, "LOGIN", "Inicio de sesión exitoso");
 
             return res.redirect("/admin/dashboard");
             
@@ -81,7 +76,6 @@ export class adminController{
                     pass: hashed
                 });
 
-            await registrarLog(admin, "CREAR_ADMIN", `Se creó el admin ${nombre}`);
                 
             res.status(201).json({ msg: "Admin creado", admin });
         } catch (err) {

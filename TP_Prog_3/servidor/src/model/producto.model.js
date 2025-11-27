@@ -15,16 +15,3 @@ export const Producto = sequelize.define("Producto", {
     timestamps: false
 });
 
-
-//multer para subir imagenes
-
-// async function conectarBD() {
-//     try {
-//         await sequelize.authenticate();
-//         console.log("Conexion exitosa a la base de datos");
-//     } catch (error) {
-//         console.error("No se pudo conectar a la base de datos:", error);
-//     }
-// }
-
-// conectarBD();
